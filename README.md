@@ -1,78 +1,61 @@
-# Steam CS2 Market Scraper & Deal Finder
+# Steam Community Market CS2 Scraper App
 
-I built a CS2 Steam Market analytics tool that combines web scraping, browser automation, structured data extraction and interactive visualization to identify potentially undervalued market listings. I included a Streamlit dashboard for scraping and analyzing CS2 Steam Market listings, including float values, pattern templates, stickers, price history and configurable deal detection.
+This Streamlit app scrapes CS2 Steam Community Market data.
 
-## Overview
-This project analyzes CS2 items listed on the Steam Community Market.
+## What it does
 
-It supports two item types:
-- indistinguishable items, such as cases, where listings are interchangeable (e.g. Revolution Case);
-- distinguishable items, such as skins, where individual listings differ by float value, pattern template, stickers and price (e.g. AK-47 | Redline)
+### Indistinguishable items
+For items such as cases, the app uses `requests`, `BeautifulSoup`, and regex to collect:
 
-The project includes:
-- a Jupyter Notebook version for detailed analysis,
-- a Streamlit app for interactive use,
-- a Scrapy spider for scaling the workflow to multiple items.
+- item overview,
+- historical median price,
+- trading volume,
+- buy/sell order histogram,
+- simple market features such as price change, volume change, and spread.
 
-## Features
-- scrape Steam Community Market listing data;
-- extract price, listing ID, asset ID and inspect links;
-- extract float value and pattern template from Steam asset data;
-- extract sticker identifiers from listing HTML;
-- filter skins by maximum float value;
-- calculate ranking features for listings;
-- analyze case price history and order book data;
-- visualize price history, volume changes and listing distributions;
-- configure what counts as a potential deal.
+Example input:
 
-## Deal detection logic
-A listing can be marked as a potential deal using configurable parameters, for example:
-- maximum float value;
-- price below the median listing price;
-- price rank percentile;
-- float rank percentile;
-- sticker presence;
-- custom threshold selected in the Streamlit sidebar.
-
-Example:
-A listing is marked as a potential deal when:
-- its price is below the median price for the scraped listings;
-- its float value is below the selected float threshold.
-
-A “potential steal” is not treated as a guaranteed profitable trade. It is a rule-based signal based on price and item attributes. By default, the app highlights listings that are cheaper than the median and have a float value below the selected threshold.
-
-The app allows the user to configure:
-- item name;
-- item type;
-- number of pages to scrape;
-- listings per page;
-- maximum float threshold;
-- request delay;
-- price threshold for deal detection;
-- whether stickers should be included in deal logic;
-- whether lower float or lower price should be prioritized.
-
-## Technologies
-- Python
-- pandas
-- requests
-- BeautifulSoup
-- Selenium
-- Scrapy
-- Streamlit
-- Plotly
-
-## How to run
-
--pip install -r requirements.txt
--streamlit run app.py
-
-## Example item names
-
+```text
 Revolution Case
+```
+
+### Distinguishable items
+For skins, the app uses Selenium to load rendered Steam Market pages and extract listing-level data:
+
+- listing ID,
+- asset ID,
+- price,
+- float value,
+- pattern template,
+- inspect link,
+- sticker codes from listing HTML.
+
+Example input:
+
+```text
 AK-47 | Redline (Field-Tested)
-M4A1-S | Cyrex (Field-Tested)
-AWP | Asiimov (Field-Tested)
+```
+
+## Installation
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # macOS/Linux
+pip install -r requirements.txt
+```
+
+Selenium uses Selenium Manager, so in most setups it will automatically find or download the correct ChromeDriver. Google Chrome must be installed.
+
+## Run
+
+```bash
+streamlit run app.py
+```
 
 ## Notes
-The scraper does not log into Steam, does not perform purchases, does not place buy orders and does not automate marketplace transactions. It only collects publicly visible market data for analytical purposes.
+
+- The app does not log into Steam.
+- It does not buy, sell, bid, or interact with marketplace transactions.
+- Request delays are kept short but non-zero to avoid excessive load.
+- Sticker values are stored as sticker codes extracted from image URLs because full sticker market names are not consistently available in rendered Steam listing HTML.
