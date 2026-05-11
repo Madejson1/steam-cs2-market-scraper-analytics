@@ -62,15 +62,6 @@ The app allows the user to configure:
 - Streamlit
 - Plotly
 
-## Project structure
-├── app.py
-├── steam_market_scraper_project.ipynb
-├── steam_catalog_spider.py
-├── requirements.txt
-├── README.md
-└── data/
-
-
 ## How to run
 
 pip install -r requirements.txt
