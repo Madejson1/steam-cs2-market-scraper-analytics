@@ -64,8 +64,8 @@ The app allows the user to configure:
 
 ## How to run
 
-pip install -r requirements.txt
-streamlit run app.py
+-pip install -r requirements.txt
+-streamlit run app.py
 
 ## Example item names
 
