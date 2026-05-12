@@ -59,3 +59,5 @@ streamlit run app.py
 - It does not buy, sell, bid, or interact with marketplace transactions.
 - Request delays are kept short but non-zero to avoid excessive load.
 - Sticker values are stored as sticker codes extracted from image URLs because full sticker market names are not consistently available in rendered Steam listing HTML.
+
+Link to the streamlit app: https://steam-cs2-market-scraper-analytics.streamlit.app/
